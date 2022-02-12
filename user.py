@@ -9,7 +9,6 @@ class User:
     def user_authorization(name, password):
         for users in read_json_file('registered_users.json'):
             if users["name"] == name and users["password"] == password:
-                print(users["name"])
                 return True
             
             else:
