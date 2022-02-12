@@ -1,6 +1,6 @@
 from write_read_json import*
-import re
-import os
+# import re
+# import os
 
 
 class User:
@@ -8,14 +8,17 @@ class User:
     @staticmethod
     def user_authorization(name, password):
         for users in read_json_file('registered_users.json'):
-            if users["name"] == name and users["name"] == password:
-                True
-
+            if users["name"] == name and users["password"] == password:
+                print(users["name"])
+                return True
+            
             else:
-                False
+                continue
+                
 
-    def __init__(self, name):
+    def __init__(self, name, password):
         self.name = name
+        self.user_registration(password)
         
     def user_registration(self, password):
         data = read_json_file('registered_users.json')
@@ -27,6 +30,7 @@ class User:
 
     def check_for_registered_user(self, user):
         """Проверяем зарегистрирован пользователь или нет"""
+
         user_mention = user[1:]
         for users in read_json_file('registered_users.json'):
             #так как польватель вводит @ то мы ее обрезаем для того чтоб сверить есть
@@ -46,20 +50,6 @@ class UserInterface:
 
         if self.user.user_authorization(name, password) == True:
             print('Авторизация прошла успешна')
-        
+            return True
         else:
             print('Ошибка вводе данных')
-
-    
-
-
-
-# text = User('name','2')
-# text.user_registration('2','2')
-# text.user_authorization('2',2)
-# if self.name == name and self.password == password:
-        #     print('авторизация прошла успешна')
-        #     self._add_user_to_json(name)
-        #     return True
-        # else:
-        #     return False 
