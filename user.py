@@ -29,22 +29,24 @@ class User:
 
     def check_for_registered_user(self, user):
         """Проверяем зарегистрирован пользователь или нет"""
+        if user.startswith('@'):
+            user_mention = user[1:]
+            for users in read_json_file('registered_users.json'):
+                #так как польватель вводит @ то мы ее обрезаем для того чтоб сверить есть
+                #ли данный пользователь в базе зарегистрированных
+                if users["name"] == user_mention:
+                    return True
 
-        user_mention = user[1:]
-        for users in read_json_file('registered_users.json'):
-            #так как польватель вводит @ то мы ее обрезаем для того чтоб сверить есть
-            #ли данный пользователь в базе зарегистрированных
-            if users["name"] == user_mention:
-                return True
-
-        if users["name"] != user_mention:
-            print('Такой пользователь не зарегистрирован')
+            if users["name"] != user_mention:
+                print('Такой пользователь не зарегистрирован')
+        else:
+            print('ошибка вводе')
 
 class UserInterface:
     def __init__(self, user):
         self.user = user
     
-    def print_authorization(self,name, password):
+    def print_authorization(self, name, password):
         """Вывод результатов авторизации"""
 
         if self.user.user_authorization(name, password) == True:
@@ -52,3 +54,4 @@ class UserInterface:
             return True
         else:
             print('Ошибка вводе данных')
+

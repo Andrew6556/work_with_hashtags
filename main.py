@@ -43,11 +43,8 @@ while True:
     
     elif user_choice == 3:
         user_mention = input('введите имя пользователя(он должен начанаться с @)\n')
-        if user_mention.startswith('@'):
-            if user.check_for_registered_user(user_mention) == True:
-                text.output_of_the_marked_user_in_the_text(user_mention)
-        else:
-            print('ошибка вводе')
+        if user.check_for_registered_user(user_mention) == True:
+            text.output_of_the_marked_user_in_the_text(user_mention)
     
     elif user_choice == 4:
         user_name = input('введите имя пользователя\n')

@@ -39,9 +39,11 @@ class Text:
         if re.match(r'#прог\w+', hashtag):
             for i in read_json_file('all_text.json'):
                 if re.search(r'#прог\w+',i["text"], flags=re.IGNORECASE):
-                    return True
+                    for users in read_json_file('data_user_text.json'):
+                        if users["name"] == hashtag:
+                            print(users["text"])
         else:
-            return False
+            print('Error')
 
     def search_text_specific_user(self, search_user):
         for users in read_json_file('data_user_text.json'):
