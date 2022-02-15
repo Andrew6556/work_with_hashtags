@@ -1,6 +1,5 @@
 from write_read_json import*
-# import re
-# import os
+
 
 
 class User:
@@ -40,7 +39,8 @@ class User:
             if users["name"] != user_mention:
                 print('Такой пользователь не зарегистрирован')
         else:
-            print('ошибка вводе')
+            return 'error'
+            # print('ошибка вводе')
 
 class UserInterface:
     def __init__(self, user):
@@ -55,3 +55,18 @@ class UserInterface:
         else:
             print('Ошибка вводе данных')
 
+    def check_for_registered_user(self, user):
+        """Вывод всех принтов при регистрации"""
+
+        if user.startswith('@'):
+            user_mention = user[1:]
+            for users in read_json_file('registered_users.json'):
+                #так как польватель вводит @ то мы ее обрезаем для того чтоб сверить есть
+                #ли данный пользователь в базе зарегистрированных
+                if users["name"] == user_mention:
+                    return True
+
+            if users["name"] != user_mention:
+                print('Такой пользователь не зарегистрирован')
+        else:
+            print('ошибка вводе')
