@@ -5,8 +5,9 @@ print('Добро пожаловать в приложение\nПроцесс �
 user_name = input('Введите ваш имя\n')
 password = input('Введите ваш пароль\n')
 
-user = User(user_name,password)
+user = User(user_name)
 user_interface = UserInterface(user)
+user_interface.registered_int(password)
 text = Text(user)
 int_text = TextInterface(text)
 
@@ -43,7 +44,7 @@ while True:
     
     elif user_choice == 3:
         user_mention = input('введите имя пользователя(он должен начанаться с @)\n')
-        if user.check_for_registered_user(user_mention) == True:
+        if user_interface.int_check_for_registered_user(user_mention) == True:
             int_text.mention_of_user_in_the_text(user_mention)
     
     elif user_choice == 4:

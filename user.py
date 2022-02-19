@@ -14,9 +14,8 @@ class User:
                 continue
                 
 
-    def __init__(self, name, password):
+    def __init__(self, name):
         self.name = name
-        self.user_registration(password)
         
     def user_registration(self, password):
         data = read_json_file('registered_users.json')
@@ -25,6 +24,9 @@ class User:
             "password":password
         })
         write_json_file('registered_users.json',data)
+        
+        user = User(self.name)
+        return user
 
     def check_for_registered_user(self, user):
         """Проверяем зарегистрирован пользователь или нет"""
@@ -37,7 +39,8 @@ class User:
                     return True
 
             if users["name"] != user_mention:
-                print('Такой пользователь не зарегистрирован')
+                return False
+                
         else:
             return 'error'
             # print('ошибка вводе')
@@ -46,6 +49,10 @@ class UserInterface:
     def __init__(self, user):
         self.user = user
     
+    def registered_int(self, password):
+        if self.user.user_registration(password):
+            print('Регистрация прошла успешно')
+
     def print_authorization(self, name, password):
         """Вывод результатов авторизации"""
 
@@ -55,18 +62,14 @@ class UserInterface:
         else:
             print('Ошибка вводе данных')
 
-    def check_for_registered_user(self, user):
+    def int_check_for_registered_user(self, user):
         """Вывод всех принтов при регистрации"""
 
-        if user.startswith('@'):
-            user_mention = user[1:]
-            for users in read_json_file('registered_users.json'):
-                #так как польватель вводит @ то мы ее обрезаем для того чтоб сверить есть
-                #ли данный пользователь в базе зарегистрированных
-                if users["name"] == user_mention:
-                    return True
-
-            if users["name"] != user_mention:
-                print('Такой пользователь не зарегистрирован')
-        else:
+        if self.user.check_for_registered_user(user) == True:
+            return True
+        
+        elif self.user.check_for_registered_user(user) == False:
+            print('Такой пользователь не зарегистрирован')
+        
+        elif self.user.check_for_registered_user(user) == 'error':
             print('ошибка вводе')
